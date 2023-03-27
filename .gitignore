@@ -1,0 +1,10 @@
+/ClientApp/nbproject/private/
+/ClientApp/build/
+/ClientApp/dist/
+/ServerApp/nbproject/private/
+/ServerApp/build/
+/ServerApp/dist/
+/CommunicationServerApp/nbproject/private/
+/CoordinaionServerApp/nbproject/private/
+/CoordinationServerApp/nbproject/private/
+/CoordinationServerApp/build/

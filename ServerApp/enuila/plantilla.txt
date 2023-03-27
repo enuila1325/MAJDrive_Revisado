@@ -1,0 +1,82 @@
+################ ROUTERS ##################
+
+enable
+conf t
+hostname RT-SUCURSAL
+username ADMIN privilege 15 secret ADMIN1234
+line con 0
+login local
+exit
+line vty 0 15
+login local
+exit
+
+################# SWITCHES ###############
+
+enable
+conf t
+hostname SW-SUCURSAL
+username ADMIN privilege 15 secret ADMIN1234
+line vty 0 15 
+login local
+exit
+line con 0
+login local
+exit
+
+vlan 10
+vlan 20
+vlan 30
+vlan 725
+name PUERTOS-SIN-USO
+
+interface range fa0/16-24
+switchport mode access
+switchport access vlan 725
+description LIBRE
+shutdown
+exit
+interface range fa0/1-5
+switchport mode access
+switchport access vlan 10
+description CAJA
+exit
+interface range fa0/6-15
+switchport mode access
+switchport access vlan 20
+description SERVICIO-AL-CLIENTE
+exit
+interface gi0/2
+switchport mode access
+switchport access vlan 30
+description CLIENTES
+exit
+
+#########Subinterfaces routers############
+
+ipv6 unicast-routing
+interface gi0/2.10
+description LAN-CAJAS
+encapsulation dot1Q 10
+ip address 172.19.30.17 255.255.255.248
+ipv6 address 2800:CCCB:1:610::/64
+no shutdown
+exit
+interface gi0/2.20
+description LAN-SERVICIO-CLIENTE
+encapsulation dot1Q 20
+ip address 172.19.30.1 255.255.255.240
+ipv6 address 2800:CCCB:1:620::/64
+no shutdown
+exit
+interface gi0/2.30
+description LAN-CLIENTES
+encapsulation dot1Q 30
+ip address 172.19.28.1 255.255.254.0
+ipv6 address 2800:CCCB:0:630::/64
+no shutdown
+exit
+interface gi0/2
+description HACIA PUERTO LEMPIRA
+no shutdown
+
