@@ -28,19 +28,21 @@ public class CoordinationServerApp {
             DataInputStream dataIn = new DataInputStream(sc.getInputStream());
             DataOutputStream dataOut = new DataOutputStream(sc.getOutputStream());
             String request = dataIn.readUTF();
-            String host = dataIn.readUTF();
             if (request.equalsIgnoreCase("uploading")) {
+                String host = dataIn.readUTF();
                 Socket conectionToSS = new Socket(host, 6000);
                 System.out.println("Socket (almacenamiento)conectado " + conectionToSS.toString());
                 FileReceiver fr = new FileReceiver(sc, conectionToSS);
                 fr.run();
             } else if (request.equalsIgnoreCase("downloading")) {
-                Socket conectionToSS = new Socket("localhost", 6000);
+                String host = dataIn.readUTF();
+                Socket conectionToSS = new Socket(host, 6000);
                 System.out.println("Socket (almacenamiento) conectado " + conectionToSS.toString());
                 FileSender fs = new FileSender(sc, conectionToSS);
                 fs.run();
             } else if (request.equalsIgnoreCase("loadFiles")) {
-                Socket conectionToSS = new Socket("localhost", 6000);
+                String host = dataIn.readUTF();
+                Socket conectionToSS = new Socket(host, 6000);
                 System.out.println("Socket (almacenamiento) conectado " + conectionToSS.toString());
                 FilesSender fss = new FilesSender(sc, conectionToSS);
                 fss.run();
@@ -70,14 +72,14 @@ public class CoordinationServerApp {
                 c.getConexion();
                 String resp = c.login(name, pass);
                 dataOut.writeUTF(resp);
-            }else if (request.equalsIgnoreCase("ubicacion")) {
+            } else if (request.equalsIgnoreCase("ubicacion")) {
                 Socket conectionToSS = new Socket("localhost", 6000);
                 System.out.println("Socket (almacenamiento) conectado " + conectionToSS.toString());
                 String name = dataIn.readUTF();
                 System.out.println("Datos received from client: name=" + name);
                 Conexion c = new Conexion();
                 c.getConexion();
-                String resp = c.ubicacion(name)+"";
+                String resp = c.ubicacion(name) + "";
                 dataOut.writeUTF(resp);
             }
         }
@@ -114,10 +116,10 @@ class FileReceiver implements Runnable {
             LocalDateTime ahora = LocalDateTime.now();
             DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
             fechaHoraIngreso = ahora.format(formato);
-            Conexion c =new Conexion();
-            
+            Conexion c = new Conexion();
+
             c.getConexion();
-            
+
             //FileOutputStream out = new FileOutputStream(filename);
             byte[] buffer = new byte[1024];
             int read;
@@ -132,12 +134,12 @@ class FileReceiver implements Runnable {
             out.flush();
             out.writeUTF(path);
             out.flush();
-            
-            String auxx=filename.substring(filename.lastIndexOf(".") + 1);;
+
+            String auxx = filename.substring(filename.lastIndexOf(".") + 1);;
             while ((read = in.read(buffer, 0, Math.min(buffer.length, (int) (fileSize - totalRead)))) > 0) {
                 totalRead += read;
                 out.write(buffer, 0, read);
-                c.Insertar(username, filename, fechaHoraIngreso, fileSize, auxx, path, "./"+username);
+                c.Insertar(username, filename, fechaHoraIngreso, fileSize, auxx, path, "./" + username);
             }
 
             System.out.println("File received");

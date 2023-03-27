@@ -220,7 +220,7 @@ public class Client_Login extends javax.swing.JFrame {
             firstModel.removeRow(0);
         }
         // Initialize socket
-        Socket sc = new Socket("192.168.1.11", 5000);
+        Socket sc = new Socket("192.168.43.96", 5000);
         InputStream in = sc.getInputStream();
         DataInputStream dataIn = new DataInputStream(in);
         DataOutputStream out = new DataOutputStream(sc.getOutputStream());
@@ -892,11 +892,11 @@ public class Client_Login extends javax.swing.JFrame {
         String host = "";
         //validar idserver  con el user
         if (ubicacionuser(user) == 0) {
-            host = "192.168.43.196";
+            host = "192.168.103.223";
         } else {
-            host = "192.168.43.156";
+            host = "192.168.103.223";
         }
-        Socket socket = new Socket("192.168.43.96", 5000); // Replace "localhost" with the server's IP address if necessary, and replace 12345 with the server's port number
+        Socket socket = new Socket("192.168.103.118", 5000); // Replace "localhost" with the server's IP address if necessary, and replace 12345 with the server's port number
 
         System.out.println("Connected to server");
         
@@ -911,7 +911,9 @@ public class Client_Login extends javax.swing.JFrame {
         dataOut.writeUTF(activeUser);
         dataOut.writeUTF(fileToSend.getName()); // Send file name to 
         dataOut.writeLong(fileToSend.length()); // Send file size to server
-        dataOut.writeUTF(fileToSend.getAbsolutePath()); // Send file path 
+        //SE COMENTÓ A LÍNEA DE ABAJO PARA QUE NO ESCRIBIERA EL PATH
+        
+        //dataOut.writeUTF(fileToSend.getAbsolutePath()); // Send file path 
         FileInputStream fileIn = new FileInputStream(fileToSend);
         int count;
         while ((count = fileIn.read(buffer)) > 0) {
@@ -925,7 +927,7 @@ public class Client_Login extends javax.swing.JFrame {
     public void receiveFile(String file, String user) throws IOException {
         // Receive file from server
 
-        Socket socket = new Socket("localhost", 5000); // Replace "localhost" with the server's IP address if necessary, and replace 12345 with the server's port number
+        Socket socket = new Socket("192.168.103.118", 5000); // Replace "localhost" with the server's IP address if necessary, and replace 12345 with the server's port number
 
         System.out.println("Connected to server");
         InputStream in = socket.getInputStream();
@@ -957,7 +959,7 @@ public class Client_Login extends javax.swing.JFrame {
     public File pseudoReceiveFile(String file, String user) throws IOException {
         // Receive file from server
 
-        Socket socket = new Socket("localhost", 5000); // Replace "localhost" with the server's IP address if necessary, and replace 12345 with the server's port number
+        Socket socket = new Socket("192.168.103.118", 5000); // Replace "localhost" with the server's IP address if necessary, and replace 12345 with the server's port number
 
         System.out.println("Connected to server");
         InputStream in = socket.getInputStream();
@@ -989,7 +991,7 @@ public class Client_Login extends javax.swing.JFrame {
     
     public boolean sendUser(String name, String pass, String ubi, int idServer) throws IOException {
         
-        Socket socket = new Socket("localhost", 5000); // Replace "localhost" with the server's IP address if necessary, and replace 12345 with the server's port number
+        Socket socket = new Socket("192.168.103.118", 5000); // Replace "localhost" with the server's IP address if necessary, and replace 12345 with the server's port number
         System.out.println("Connected to server");
         OutputStream out = socket.getOutputStream();
         DataOutputStream dataOut = new DataOutputStream(out);
@@ -1017,7 +1019,7 @@ public class Client_Login extends javax.swing.JFrame {
     }
     
     public boolean ValidationUser(String name, String pass) throws IOException {
-        Socket socket = new Socket("localhost", 5000); // Replace "localhost" with the server's IP address if necessary, and replace 12345 with the server's port number
+        Socket socket = new Socket("192.168.103.118", 5000); // Replace "localhost" with the server's IP address if necessary, and replace 12345 with the server's port number
         System.out.println("Connected to server");
         OutputStream out = socket.getOutputStream();
         DataOutputStream dataOut = new DataOutputStream(out);
@@ -1044,7 +1046,7 @@ public class Client_Login extends javax.swing.JFrame {
     }
     
     public int ubicacionuser(String user) throws IOException {
-        Socket socket = new Socket("localhost", 5000); // Replace "localhost" with the server's IP address if necessary, and replace 12345 with the server's port number
+        Socket socket = new Socket("192.168.103.118", 5000); // Replace "localhost" with the server's IP address if necessary, and replace 12345 with the server's port number
         System.out.println("Connected to server");
         OutputStream out = socket.getOutputStream();
         DataOutputStream dataOut = new DataOutputStream(out);
